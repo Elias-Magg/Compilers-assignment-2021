@@ -55,7 +55,7 @@ Tokens
 	geq = '>='
 	leq = '<='
 	neq = '!='
-	equals = '=='
+	logic_eq = '=='
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
