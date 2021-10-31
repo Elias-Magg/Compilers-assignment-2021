@@ -44,6 +44,18 @@ Tokens
 	semi = ':';
 	false = 'false';
 	quote = '"';
+	import = 'import';
+	as = 'as';
+	from = 'from';
+	dot = '.'
+	and = 'and';
+	or = 'or';
+	not = 'not';
+	none = 'None'
+	geq = '>='
+	leq = '<='
+	neq = '!='
+	equals = '=='
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
