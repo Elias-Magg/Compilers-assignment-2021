@@ -20,7 +20,7 @@ Tokens
 	mult = '*';
 	dmult = '**';
 	div = '/';
-	eq = '=';
+	assign = '=';
 	exclam = '!';
 	dictt = 'dict';
 	def = 'def';
@@ -55,7 +55,7 @@ Tokens
 	geq = '>='
 	leq = '<='
 	neq = '!='
-	logic_eq = '=='
+	equals = '=='
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
