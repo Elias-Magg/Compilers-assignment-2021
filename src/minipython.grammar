@@ -38,6 +38,7 @@ Tokens
 	while = 'while';
 	print = 'print';
 	return = 'return';
+	assert='assert';
 	less = '<';
 	great = '>';
 	true = 'true';
@@ -47,6 +48,7 @@ Tokens
 	import = 'import';
 	as = 'as';
 	from = 'from';
+	in='in';
 	dot = '.'
 	and = 'and';
 	or = 'or';
@@ -56,6 +58,9 @@ Tokens
 	leq = '<='
 	neq = '!='
 	equals = '=='
+	sort_minus='-=';
+	sort_plus='+=';
+	sort_divesion='/=';a
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
