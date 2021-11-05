@@ -58,9 +58,9 @@ Tokens
 	leq = '<='
 	neq = '!='
 	equals = '=='
-	sort_minus='-=';
-	sort_plus='+=';
-	sort_divesion='/=';a
+	merge_minus='-=';
+	merge_plus='+=';
+	merge_divesion='/=';a
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
