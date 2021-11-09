@@ -20,24 +20,29 @@ Tokens
 	mult = '*';
 	dmult = '**';
 	div = '/';
+	mod = '%';
 	assign = '=';
 	exclam = '!';
-	dictt = 'dict';
+	dict = 'dict';
 	def = 'def';
 	logic_plus = '&&';
 	l_par = '(';
 	r_par = ')';
 	l_br = '[';
 	r_br = ']';
-	comma=',';
+	comma =',';
 	qmark = '?';
 	gqmark = ';';
 	if = 'if';
 	elif = 'elif';
 	else = 'else';
+	for = 'for';
+	in = 'in';
 	while = 'while';
 	print = 'print';
 	return = 'return';
+	max = 'max';
+	min = 'min';
 	less = '<';
 	great = '>';
 	true = 'true';
@@ -47,15 +52,19 @@ Tokens
 	import = 'import';
 	as = 'as';
 	from = 'from';
-	dot = '.'
+	len = 'len';
+	assert = 'assert';
+	dot = '.';
 	and = 'and';
 	or = 'or';
 	not = 'not';
-	none = 'None'
-	geq = '>='
-	leq = '<='
-	neq = '!='
-	equals = '=='
+	none = 'None';
+	geq = '>=';
+	leq = '<=';
+	neq = '!=';
+	equals = '==';
+	min_eq = '-=';
+	div_eq = '/=';
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
 	number = digit+ | (digit+ '.' digit+);
