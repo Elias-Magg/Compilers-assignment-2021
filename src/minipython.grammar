@@ -58,6 +58,7 @@ Tokens
 	leq = '<='
 	neq = '!='
 	equals = '=='
+	/*add tokens*/
 	merge_minus='-=';
 	merge_plus='+=';
 	merge_divesion='/=';a
