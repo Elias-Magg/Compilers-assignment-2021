@@ -1,5 +1,3 @@
-package tests;
-
 import java.io.*;
 import minipython.lexer.Lexer;
 import minipython.parser.Parser;

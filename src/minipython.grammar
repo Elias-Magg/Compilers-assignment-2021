@@ -63,7 +63,7 @@ Tokens
 	merge_divesion='/=';a
 	blank = (' ' | lf | cr);
 	line_comment = '#' not_eol* eol; 
-	number = digit+ | (digit+ '.' digit+);
+	num = digit+ | (digit+ '.' digit+);
 	id = letter (letter | digit)*;
 	string = '"'not_eol* '"';
 
@@ -72,79 +72,59 @@ Ignored Tokens
 
 
 Productions
-	programme = commands*;
 
-	commands ={stat} statement|
-				 {expr}expression;
+    goal = command*;
 
+    command = {function} function|
+            {statement} statement;
 
+    function = def identifier l_par argument? r_par semi statement;
 
-	statement ={if}tab* if  comparison semi statement |
-				  {assign}tab* id eq expression |
-				  {print}tab* print expression;
+    argument = identifier eq_val? comma_identifier*;
 
+    eq_val = assign value;
 
-	comparison = {true} true|
-					 {false} false|
-					 {lessc} [lpar]:expression less [rpar]:expression|
-					 {greatc}[lpar]:expression great [rpar]:expression;
+    comma_identifier = comma identifier eq_val?;
 
+    statement = {function_call} tab* function_call|
+                    {if} tab* if comparison semi statement|
+                    {while} tab* while comparison semi statement|
+                    {for} tab* for identifier semi identifier semi statement|
+                    {return} tab* return expression|
+                    {print} tab* print expression comma_expression*;
 
-	expression = {multiplication} multiplication |
-					{addition} expression plus multiplication|
-					{subtraction} expression minus multiplication;
+    expression = {function_call} function_call|
+                    {value} value|
+                    {identifier} identifier;
 
-	multiplication = {something} something |
-						  {multiplication} multiplication mult something;
-
-
-	something ={identifier}id|
-				  {numb}number|
-				  {par} l_par expression r_par;
-
-
-	/* REDEFINITION ERROR - idio onoma enallaktikwn -> {greatc}
-	*comparison = {true} true|
-	*				 {false} false|
-	*				 {greatc} [lpar]:expression less [rpar]:expression|
-	*				 {greatc}[lpar]:expression great [rpar]:expression;
-	*/
-
-	/*
-	  SHIFT/REDUCE conflict
-		expression = {multiplication} multiplication |
-					{addition} [e1]:expression plus [e2]:expression|
-					{subtraction} expression minus multiplication;
-	*/
+    comparison = {and_comparison} comparison and comparison|
+                    {not_comparison} comparison not comparison|
+                    {or_comparison} comparison or comparison|
+                    {less} expression less expression|
+                    {great} expression great expression|
+                    {geq} expression geq expression|
+                    {leq} expression leq expression|
+                    {neq} expression neq expression|
+                    {equals} expression equals expression|
+                    {true} true|
+                    {false} false;
 
 
-	/*
-	* REDEFINITION ERROR - idio onoma kanona
-	* 	comparison ={if}tab* if  comparison semi statement |
-	*			  {assign}tab* id eq expression |
-	*			  {print}tab* print expression;
-	*
-	*
-	*/
+	comma_expression = comma expression;
 
+	function_call = identifier l_par arglist? r_par;
 
-	/*
-	* REDUCE/REDUCE conflict - dyo kanones idies enallaktikes
-	* anagontai ston idio kanona-patera (pou einai o multiplication)
-	*
-	*multiplication = {something} something |
-	*				 {s1} something1 |
-	*				 {multiplication} multiplication mult something;
-	*
-	*something ={identifier}id|
-	*		 	  	   {numb}number|
-	*			       {par} l_par expression r_par;
-	*
-	*something1 ={identifier}id|
-	*		 	  	   {numb}number|
-	*			       {par} l_par expression r_par;
-	*
-	*/
+	arglist = expression comma_expression*;
+
+    value = {idperiodfunccall} identifier function_call |
+    			{number} number |
+    			{string} string |
+    			{none} none;
+
+    identifier = id;
+
+    number = num;
+
 
 
 
