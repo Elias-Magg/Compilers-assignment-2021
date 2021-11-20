@@ -1,7 +1,3 @@
-/*
-* Test Comments
-*/
-
 Package minipython;
 
 Helpers
@@ -12,6 +8,8 @@ Helpers
 	all = [0..127]; 
 	eol = lf | cr | cr lf ;
 	not_eol = [all - [cr + lf]]; 
+    single_quote = 39;
+
 Tokens
 	tab = 9;
 	plus = '+';
@@ -68,7 +66,7 @@ Tokens
 	line_comment = '#' not_eol* eol;
 	number = digit+ | (digit+ '.' digit+);
 	id = letter (letter | digit)*;
-	string = '"'not_eol* '"';
+	string = (('"'not_eol* '"') | (single_quote not_eol* single_quote));
 
 Ignored Tokens
 	blank, line_comment;
@@ -81,53 +79,94 @@ Productions
     command = {function} function|
             {statement} statement;
 
-    function = def identifier l_par argument? r_par semi statement;
+    function = def id l_par argument? r_par semi statement;
 
-    argument = identifier eq_val? comma_identifier*;
+    argument = id eq_val? comma_id_assign*;
 
     eq_val = assign value;
 
-    comma_identifier = comma identifier eq_val?;
+    comma_id_assign = comma id eq_val?;
 
-    statement = {function_call} tab* function_call|
-                    {if} tab* if comparison semi statement|
-                    {while} tab* while comparison semi statement|
-                    {for} tab* for identifier semi identifier semi statement|
-                    {return} tab* return expression|
-                    {print} tab* print expression comma_expression*;
+    import_package = {simple_import} import module as_id? comma_module* |
+                     {specific_import} from module [mod_alias]:as_id? import id [pack_alias]:as_id? comma_id_as_id*;
 
-    expression = {function_call} function_call|
+    module = id_dot* id;    
+
+    statement = {if} tab* if comparison semi statement |
+				{while} tab* while comparison semi statement |
+				{for} tab* for [lpar]:id in [rpar]:id semi statement |
+				{return} tab* return expression |
+				{print} tab* print expression comma_expression*|
+				{assign} tab* id assign expression|
+				{mineq} tab* id min_eq expression |
+				{diveq} tab* id div_eq expression|
+				{arraycell} id l_br [lpar]:expression r_br assign [rpar]:expression |
+				{assert} tab* assert expression comma_expression?|
+				{functioncall} tab* function_call |
+                {import} import_package;
+    
+    comma_expression = comma expression;
+
+    expression = {multiplication} multiplication |
+					{addition} expression plus multiplication|
+					{subtraction} expression minus multiplication |
+                    {length} len l_par expression r_par |
+                    {list_expression} id l_br expression r_br;
+
+    multiplication = {something} something | 
+				     {multiplication} multiplication mult something |
+                     {division} multiplication div something |
+                     {modulo} multiplication mod something |
+                     {exp} multiplication dmult something;
+
+    something = {function_call} function_call|
                     {value} value|
-                    {identifier} identifier;
+                    {identifier} id |
+                    {minmax} min_max_expression |
+                    {array} l_br value comma_value* r_br |
+                    {parenthenses} l_par expression r_par;
 
-    comparison = {and_comparison} comparison and comparison|
-                    {not_comparison} comparison not comparison|
-                    {or_comparison} comparison or comparison|
-                    {less} expression less expression|
-                    {great} expression great expression|
-                    {geq} expression geq expression|
-                    {leq} expression leq expression|
-                    {neq} expression neq expression|
-                    {equals} expression equals expression|
-                    {true} true|
-                    {false} false;
+    min_max_expression = {maxval} max [lpar]:l_par value comma_value* [rpar]:r_par |
+                       {minval} min [lpar]:l_par value comma_value* [rpar]:r_par;
+					
+	comparison = {andc} and_comparison |
+				 {orc} comparison or and_comparison;
+				 
+	and_comparison = {notc} not_comparison  |
+								   {andc} and_comparison and not_comparison;
+	
+	not_comparison  = {otherc} composite_comparison  |
+								   {notc} not composite_comparison;
+	
+	composite_comparison  = {lessc} [lpar]:expression less [rpar]:expression|
+									 {greatc} [lpar]:expression great [rpar]:expression|
+									 {leqc} [lpar]:expression leq [rpar]:expression |
+									 {geqc} [lpar]:expression geq [rpar]:expression|
+									 {neqc} [lpar]:expression neq [rpar]:expression |
+									 {eqc} [lpar]:expression equals [rpar]:expression |
+									 {true} true  |
+									 {false} false;
 
+    comma_value  = comma value;
 
-	comma_expression = comma expression;
+    id_dot = id dot;
 
-	function_call = identifier l_par arglist? r_par;
+    comma_id_as_id = comma_id as_id?;
+
+    as_id = as id;
+    
+    comma_id = comma id;
+
+    comma_module = comma module as_id?;
+
+	function_call = id l_par arglist? r_par;
 
 	arglist = expression comma_expression*;
 
-    value = {idperiodfunccall} identifier function_call |
+    value = {func_call} id dot function_call |
     			{number} number |
     			{string} string |
     			{none} none;
 
-    identifier = id;
-
-    number = num;
-
-
-
+	
 
