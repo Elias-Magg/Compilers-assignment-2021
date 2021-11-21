@@ -1,3 +1,7 @@
+//Σπυριδούλα Κουτσούκου, 3170080
+//Μαγγίνας Ηλίας, 3170096
+//Δουραχαλής Φίλιππος, 3170045
+
 Package minipython;
 
 Helpers
@@ -111,7 +115,8 @@ Productions
 					{addition} expression plus multiplication|
 					{subtraction} expression minus multiplication |
                     {length} len l_par expression r_par |
-                    {list_expression} id l_br expression r_br;
+                    {list_expression} id l_br expression r_br |
+                    {br_epxression} l_br expression comma_expression* r_br;
 
     multiplication = {something} something | 
 				     {multiplication} multiplication mult something |
@@ -123,7 +128,6 @@ Productions
                     {value} value|
                     {identifier} id |
                     {minmax} min_max_expression |
-                    {array} l_br value comma_value* r_br |
                     {parenthenses} l_par expression r_par;
 
     min_max_expression = {maxval} max [lpar]:l_par value comma_value* [rpar]:r_par |
