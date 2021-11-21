@@ -93,7 +93,7 @@ Productions
 
     import_package = {simple_import} import module as_id? comma_module* |
                      {specific_import} from module [mod_alias]:as_id? import id [pack_alias]:as_id? comma_id_as_id*;
-
+    
     module = id_dot* id;    
 
     statement = {if} tab* if comparison semi statement |
@@ -168,9 +168,9 @@ Productions
 	arglist = expression comma_expression*;
 
     value = {func_call} id dot function_call |
-    			{number} number |
+    			{number} real_number |
     			{string} string |
     			{none} none;
 
-	
-
+    real_number = {positive} number |
+                  {neg} minus number;
