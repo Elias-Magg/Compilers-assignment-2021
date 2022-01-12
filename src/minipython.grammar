@@ -100,7 +100,7 @@ Productions
 				{while} tab* while comparison semi statement |
 				{for} tab* for [lpar]:id in [rpar]:id semi statement |
 				{return} tab* return expression |
-				{print} tab* print expression comma_expression*|
+				{print} tab* print arglist|
 				{assign} tab* id assign expression|
 				{mineq} tab* id min_eq expression |
 				{diveq} tab* id div_eq expression|
@@ -152,6 +152,8 @@ Productions
 									 {false} false;
 
     comma_value  = comma value;
+    
+    arglist = {one}expression | {many} arglist comma expression;
 
     id_dot = id dot;
 
@@ -164,8 +166,6 @@ Productions
     comma_module = comma module as_id?;
 
 	function_call = id l_par arglist? r_par;
-
-	arglist = expression comma_expression*;
 
     value = {func_call} id dot function_call |
     			{number} real_number |
