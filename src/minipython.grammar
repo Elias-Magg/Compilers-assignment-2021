@@ -229,10 +229,9 @@ Abstract Syntax Tree
 				 {len} expression |
 				 {value} value |
 				 {identifier} id |
-				 {array} [lpar]:expression [rpar]:expression*;
-
-	min_max_expression = {maxval} max value value* |
-                       {minval} value comma_value*;
+				 {array} [lpar]:expression [rpar]:expression* |
+				 {maxval} value value* |
+                 {minval} value value*;
 
 	functioncall = identifier arglist*;
 
