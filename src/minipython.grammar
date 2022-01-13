@@ -248,6 +248,7 @@ Abstract Syntax Tree
 	arglist = [lpar]:expression [rpar]:expression*;
 
 	value = {func_call} id function_call |
-			{number} number |
+			{pos_num} number |
+			{neg_num} number |
 			{string} string |
 			{none};
