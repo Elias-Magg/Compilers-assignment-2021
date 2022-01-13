@@ -78,25 +78,25 @@ Ignored Tokens
 
 Productions
 
-   ------goal = command*;
+    goal = command*;
 
-    -----command = {function} function|
+    command = {function} function |
             {statement} statement;
 
-    -----function = def id l_par argument? r_par semi statement;
+    function = def id l_par argument? r_par semi statement;
 
-    -----argument = id eq_val? comma_id_assign*;
+    argument = {single} id eq_val? | {many} argument comma id eq_val?;
 
-    -----eq_val = assign value;
+    eq_val = assign value;
 
-    -----comma_id_assign = comma id eq_val?;
-
-    -----import_package = {simple_import} import module as_id? comma_module* |
+    import_package = {simple_import} import module as_id? comma_module* |
                      {specific_import} from module [mod_alias]:as_id? import id [pack_alias]:as_id? comma_id_as_id*;
     
-    -----module = id_dot* id;    
+    module = id_dot* id;    
 
-    -----statement = {if} tab* if comparison semi statement |
+	comma_module = comma module as_id?;
+
+    statement = {if} tab* if comparison semi statement |
 				{while} tab* while comparison semi statement |
 				{for} tab* for [lpar]:id in [rpar]:id semi statement |
 				{return} tab* return expression |
@@ -109,17 +109,20 @@ Productions
 				{functioncall} tab* function_call |
                 {import} import_package;
     
-    -----comma_expression = comma expression;
+    comma_expression = comma expression;
 
-    -----expression = {multiplication} multiplication |
+    expression = {multiplication} multiplication |
 					{addition} expression plus multiplication|
 					{subtraction} expression minus multiplication |
                     {length} len l_par expression r_par |
                     {list_expression} id l_br expression r_br |
 					{minmax} min_max_expression |
-                    {br_epxression} l_br expression comma_expression* r_br;
+                    {array} l_br array_expression r_br;
 
-    -----multiplication{-> expression} = {something} something |
+	array_expression = {single} expression |
+						 {many} array_expression comma expression;
+
+    multiplication{-> expression} = {something} something |
 				     {multiplication} multiplication mult something |
                      {division} multiplication div something |
                      {modulo} multiplication mod something |
@@ -130,19 +133,19 @@ Productions
                     {identifier} id |
                     {parenthenses} l_par expression r_par;
 
-    -----min_max_expression{-> expression} = {maxval} max [lpar]:l_par value comma_value* [rpar]:r_par |
+    min_max_expression{-> expression} = {maxval} max [lpar]:l_par value comma_value* [rpar]:r_par |
                        {minval} min [lpar]:l_par value comma_value* [rpar]:r_par;
 					
-	-----comparison = {andc} and_comparison |
+	comparison = {andc} and_comparison |
 				 {orc} comparison or and_comparison;
 				 
-	-----and_comparison = {notc} not_comparison  |
+	and_comparison = {notc} not_comparison  |
 								   {andc} and_comparison and not_comparison;
 	
-	-----not_comparison  = {otherc} composite_comparison  |
+	not_comparison  = {otherc} composite_comparison  |
 								   {notc} not composite_comparison;
 	
-	-----composite_comparison  = {lessc} [lpar]:expression less [rpar]:expression|
+	composite_comparison  = {lessc} [lpar]:expression less [rpar]:expression|
 									 {greatc} [lpar]:expression great [rpar]:expression|
 									 {leqc} [lpar]:expression leq [rpar]:expression |
 									 {geqc} [lpar]:expression geq [rpar]:expression|
@@ -151,19 +154,15 @@ Productions
 									 {true} true  |
 									 {false} false;
 
-    -----comma_value  = comma value;
+    comma_value  = comma value;
     
-    -----arglist = {one}expression | {many} arglist comma expression;
+    arglist = {one}expression | {many} arglist comma expression;
 
     id_dot = id dot;
 
-    comma_id_as_id = comma_id as_id?;
+    comma_id_as_id = comma id as_id?;
 
     as_id = as id;
-    
-    comma_id = comma id;
-
-    comma_module = comma module as_id?;
 
 	function_call = id l_par arglist? r_par;
 
@@ -180,9 +179,9 @@ Abstract Syntax Tree
 
 
 
-    goal = commands*;
+    goal = command*;
 
-	commands = {func} function |
+	command = {func} function |
 			   {stat} statement;
 
 	function = id argument* statement;
@@ -224,15 +223,15 @@ Abstract Syntax Tree
 				 {division} [lpar]:expression [rpar]:expression |
 				 {modulo} [lpar]:expression [rpar]:expression |
 				 {exponentiation} [lpar]:expression [rpar]:expression |
-				 {subscription} identifier expression |
+				 {subscription} id expression |
 				 {functioncall} function_call |
-				 {len} expression |
 				 {value} value |
 				 {identifier} id |
-				 {array} [lpar]:expression [rpar]:expression* |
-				 {parenthenses} expression |
+				 {len} expression |
 				 {max} value value* |
-                 {min} value value*;
+                 {min} value value* |
+				 {array} [lpar]:expression [rpar]:expression* |
+				 {parenthenses} expression ;
 
 	import_package = {simple_import} module id* comma_module* |
                      {specific_import} module [mod_alias]:id* id [pack_alias]:id* comma_id_as_id*;
