@@ -87,7 +87,7 @@ Productions
 
     argument {->argument}= {single} identifier {-> New argument.single(identifier.identifier)} | {single_assign} identifier assign value {-> New argument.single_assign(identifier.identifier, value.value)} | {many} argument comma identifier eq_val? {-> New argument.many(argument.argument, identifier.identifier, eq_val.value)};
 
-    import_package {->statement} = {simple_import} import module as_id? comma_module* {-> New import_package.simple_import(module, as_id.identifier, [comma_module])} |
+    import_package = {simple_import} import module as_id? comma_module* {-> New import_package.simple_import(module, as_id.identifier, [comma_module])} |
                      {specific_import} from module [mod_alias]:as_id? import identifier [pack_alias]:as_id? comma_id_as_id* {-> New import_package.specific_import(module, [mod_alias.identifier], identifier.identifier, [pack_alias.identifier], [comma_id_as_id])};
     
 	as_id {-> identifier} = as identifier {-> identifier.identifier};
@@ -108,7 +108,7 @@ Productions
 				{arraycell} identifier l_br [index]:expression r_br assign [val]:expression {-> New statement.arraycell(identifier.identifier, index, val)}|
 				{assert} tab* assert expression comma_expression? {-> New statement.assert(expression.expression, [comma_expression.expression])}|
 				{functioncall} tab* function_call {-> New statement.functioncall(function_call)}|
-                {import} import_package {->import_package.statement};
+                {import} import_package {->New statement.import(import_package)};
 
     expression {-> expression} = {multiplication} multiplication {-> multiplication.expression}|
 					{addition} expression plus multiplication {-> New expression.addition(expression, multiplication.expression)}|
@@ -116,7 +116,7 @@ Productions
                     {length} len l_par expression r_par {-> New expression.len(expression)}|
                     {list_expression} identifier l_br expression r_br {-> New expression.list_expression(identifier.identifier, expression.expression)}|
 					{minmax} min_max_expression {-> min_max_expression.expression}|
-                    {array} l_br array_expression r_br {-> array_expression};
+                    {array} l_br array_expression r_br {->New expression.array(array_expression)};
 
 	comma_expression {-> expression} = comma expression {-> expression};
 
@@ -130,8 +130,8 @@ Productions
                      {exp} multiplication dmult something {-> New expression.exponentiation(multiplication.expression, something.expression)};
 
     something{-> expression} = {function_call} function_call {-> New expression.functioncall(function_call)}|
-                    {value} value {->value.value}|
-                    {identifier} identifier {-> identifier.identifier}|
+                    {value} value {-> New expression.value(value.value)}|
+                    {identifier} identifier {-> New expression.identifier(identifier.identifier)}|
                     {parenthenses} l_par expression r_par {-> expression.expression};
 
     min_max_expression{-> expression} = {max} max [lpar]:l_par value comma_value* [rpar]:r_par {-> New expression.max(value, [comma_value.value])}|
