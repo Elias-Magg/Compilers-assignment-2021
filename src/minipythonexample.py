@@ -16,9 +16,11 @@ def y(a, b, c): #removing ',' shows "missing )"
 
 	a=[b] #removing ']' shows "missing ], +, -, or ,
 	if a < -5 or a >= b:
-		a = 5
+		return a 
 
 def x():
 	k =10
     id = [max(1,2,3,4), 5]
     print "A", 6, undef #removing , shows appropriate missing error
+	
+print k
