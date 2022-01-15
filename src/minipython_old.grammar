@@ -84,13 +84,15 @@ Productions
             {statement} statement ;
 
     function = def identifier l_par argument? r_par semi statement ;
-= {single} identifier 
-    argument ;
+
+    argument = {single} identifier 
+                {single_assign} identifier assign value | 
+                {many} argument comma identifier eq_val?;
 
     import_package = {simple_import} import module as_id? comma_module*  |
                      {specific_import} from module [mod_alias]:as_id? import identifier [pack_alias]:as_id? comma_id_as_id* ;
     
-	as_id ;
+	as_id =  as identifier;
 
     module = {multi} identifier dot module  |
 	 		 {single} identifier ;    
