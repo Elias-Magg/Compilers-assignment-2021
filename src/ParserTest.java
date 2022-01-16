@@ -18,13 +18,19 @@ public class ParserTest
 
      Hashtable<String, List<FunctionArgs>> funtable =  new Hashtable<>();
      Hashtable<String, Type> vars = new Hashtable<>();
+     Hashtable<String, SecondVisitor.FunCall> calls = new Hashtable<>();
      Start ast = parser.parse();
      ast.apply(new myvisitor(funtable, vars));
+     ast.apply(new SecondVisitor(funtable, vars, calls));
      for(Map.Entry<String, List<FunctionArgs>> function: funtable.entrySet()){
          System.out.println(function.getKey());
          for(FunctionArgs arg: function.getValue()){
              System.out.println(arg);
          }
+     }
+
+     for(Map.Entry<String, Type> v: vars.entrySet()){
+         System.out.println(v.getKey() + ": " + v.getValue());
      }
     }
     catch (Exception e)

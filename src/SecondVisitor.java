@@ -22,6 +22,12 @@ public class SecondVisitor extends DepthFirstAdapter {
 
     private FunCall currentFunc; //keep the most recently found function definition
 
+    public SecondVisitor(Hashtable<String, List<FunctionArgs>> functions, Hashtable<String, Type> vars, Hashtable<String, FunCall> fcalls) {
+        this.functions = functions;
+        this.vars = vars;
+        this.fcalls = fcalls;
+    }
+
     //Assignment statements
     @Override
     public void inAAssignStatement(AAssignStatement node)
