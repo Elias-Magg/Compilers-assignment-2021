@@ -56,28 +56,28 @@ public class SecondVisitor extends DepthFirstAdapter {
     }
 
     @Override
-    public void outASubtractionExpression(ASubtractionExpression node) {
+    public void inASubtractionExpression(ASubtractionExpression node) {
         PExpression left = node.getLpar();
         PExpression right = node.getRpar();
         getOperationType(left, right);
     }
 
     @Override
-    public void outAMultiplicationExpression(AMultiplicationExpression node) {
+    public void inAMultiplicationExpression(AMultiplicationExpression node) {
         PExpression left = node.getLpar();
         PExpression right = node.getRpar();
         getOperationType(left, right);
     }
 
     @Override
-    public void outADivisionExpression(ADivisionExpression node) {
+    public void inADivisionExpression(ADivisionExpression node) {
         PExpression left = node.getLpar();
         PExpression right = node.getRpar();
         getOperationType(left, right);
     }
 
     @Override
-    public void outAModuloExpression(AModuloExpression node) {
+    public void inAModuloExpression(AModuloExpression node) {
         PExpression left = node.getLpar();
         PExpression right = node.getRpar();
         getOperationType(left, right);
@@ -119,9 +119,6 @@ public class SecondVisitor extends DepthFirstAdapter {
     public void outAReturnStatement(AReturnStatement node) {
         returning = false;
     }
-
-
-    //helper methods
 
     private void getOperationType(PExpression operandA, PExpression operandB) {
         //If we are in a return statement ignore the check since we don't know what each variable might be

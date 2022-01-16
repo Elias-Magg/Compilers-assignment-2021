@@ -16,7 +16,7 @@ def y(a, b, c): #removing ',' shows "missing )"
 	a = [1,2,3,4,5]
 
 	a=[b] #removing ']' shows "missing ], +, -, or ,
-	if a < -5 or a >= b:
+	if a < "hello" or a >= b:
 		return a 
 
 def x():
