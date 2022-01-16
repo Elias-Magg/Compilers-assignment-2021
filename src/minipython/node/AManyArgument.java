@@ -7,32 +7,27 @@ import minipython.analysis.*;
 
 public final class AManyArgument extends PArgument
 {
-    private PArgument _argument_;
-    private PIdentifier _identifier_;
-    private PValue _value_;
+    private PArgument _a1_;
+    private PArgument _a2_;
 
     public AManyArgument()
     {
     }
 
     public AManyArgument(
-        PArgument _argument_,
-        PIdentifier _identifier_,
-        PValue _value_)
+        PArgument _a1_,
+        PArgument _a2_)
     {
-        setArgument(_argument_);
+        setA1(_a1_);
 
-        setIdentifier(_identifier_);
-
-        setValue(_value_);
+        setA2(_a2_);
 
     }
     public Object clone()
     {
         return new AManyArgument(
-            (PArgument) cloneNode(_argument_),
-            (PIdentifier) cloneNode(_identifier_),
-            (PValue) cloneNode(_value_));
+            (PArgument) cloneNode(_a1_),
+            (PArgument) cloneNode(_a2_));
     }
 
     public void apply(Switch sw)
@@ -40,16 +35,16 @@ public final class AManyArgument extends PArgument
         ((Analysis) sw).caseAManyArgument(this);
     }
 
-    public PArgument getArgument()
+    public PArgument getA1()
     {
-        return _argument_;
+        return _a1_;
     }
 
-    public void setArgument(PArgument node)
+    public void setA1(PArgument node)
     {
-        if(_argument_ != null)
+        if(_a1_ != null)
         {
-            _argument_.parent(null);
+            _a1_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +57,19 @@ public final class AManyArgument extends PArgument
             node.parent(this);
         }
 
-        _argument_ = node;
+        _a1_ = node;
     }
 
-    public PIdentifier getIdentifier()
+    public PArgument getA2()
     {
-        return _identifier_;
+        return _a2_;
     }
 
-    public void setIdentifier(PIdentifier node)
+    public void setA2(PArgument node)
     {
-        if(_identifier_ != null)
+        if(_a2_ != null)
         {
-            _identifier_.parent(null);
+            _a2_.parent(null);
         }
 
         if(node != null)
@@ -87,59 +82,27 @@ public final class AManyArgument extends PArgument
             node.parent(this);
         }
 
-        _identifier_ = node;
-    }
-
-    public PValue getValue()
-    {
-        return _value_;
-    }
-
-    public void setValue(PValue node)
-    {
-        if(_value_ != null)
-        {
-            _value_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        _value_ = node;
+        _a2_ = node;
     }
 
     public String toString()
     {
         return ""
-            + toString(_argument_)
-            + toString(_identifier_)
-            + toString(_value_);
+            + toString(_a1_)
+            + toString(_a2_);
     }
 
     void removeChild(Node child)
     {
-        if(_argument_ == child)
+        if(_a1_ == child)
         {
-            _argument_ = null;
+            _a1_ = null;
             return;
         }
 
-        if(_identifier_ == child)
+        if(_a2_ == child)
         {
-            _identifier_ = null;
-            return;
-        }
-
-        if(_value_ == child)
-        {
-            _value_ = null;
+            _a2_ = null;
             return;
         }
 
@@ -147,21 +110,15 @@ public final class AManyArgument extends PArgument
 
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(_argument_ == oldChild)
+        if(_a1_ == oldChild)
         {
-            setArgument((PArgument) newChild);
+            setA1((PArgument) newChild);
             return;
         }
 
-        if(_identifier_ == oldChild)
+        if(_a2_ == oldChild)
         {
-            setIdentifier((PIdentifier) newChild);
-            return;
-        }
-
-        if(_value_ == oldChild)
-        {
-            setValue((PValue) newChild);
+            setA2((PArgument) newChild);
             return;
         }
 

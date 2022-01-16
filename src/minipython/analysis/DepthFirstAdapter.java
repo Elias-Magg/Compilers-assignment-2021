@@ -124,26 +124,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAFunction(node);
     }
 
-    public void inASingleArgument(ASingleArgument node)
-    {
-        defaultIn(node);
-    }
-
-    public void outASingleArgument(ASingleArgument node)
-    {
-        defaultOut(node);
-    }
-
-    public void caseASingleArgument(ASingleArgument node)
-    {
-        inASingleArgument(node);
-        if(node.getIdentifier() != null)
-        {
-            node.getIdentifier().apply(this);
-        }
-        outASingleArgument(node);
-    }
-
     public void inASingleAssignArgument(ASingleAssignArgument node)
     {
         defaultIn(node);
@@ -168,6 +148,26 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outASingleAssignArgument(node);
     }
 
+    public void inASingleArgument(ASingleArgument node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASingleArgument(ASingleArgument node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseASingleArgument(ASingleArgument node)
+    {
+        inASingleArgument(node);
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        outASingleArgument(node);
+    }
+
     public void inAManyArgument(AManyArgument node)
     {
         defaultIn(node);
@@ -181,17 +181,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAManyArgument(AManyArgument node)
     {
         inAManyArgument(node);
-        if(node.getArgument() != null)
+        if(node.getA1() != null)
         {
-            node.getArgument().apply(this);
+            node.getA1().apply(this);
         }
-        if(node.getIdentifier() != null)
+        if(node.getA2() != null)
         {
-            node.getIdentifier().apply(this);
-        }
-        if(node.getValue() != null)
-        {
-            node.getValue().apply(this);
+            node.getA2().apply(this);
         }
         outAManyArgument(node);
     }

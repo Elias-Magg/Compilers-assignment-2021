@@ -70,7 +70,7 @@ Tokens
 	line_comment = '#' not_eol* eol;
 	number = digit+ | (digit+ '.' digit+);
 	id = letter (letter | digit)*;
-	string = (('"'not_eol* '"') | (single_quote not_eol* single_quote));
+	string = (('"' not_eol* '"') | (single_quote not_eol* single_quote));
 
 Ignored Tokens
 	blank, line_comment;
@@ -85,7 +85,11 @@ Productions
 
     function = def identifier l_par argument? r_par semi statement {-> New function(identifier.identifier, argument, statement)};
 
-    argument {->argument}= {single} identifier {-> New argument.single(identifier.identifier)} | {single_assign} identifier assign value {-> New argument.single_assign(identifier.identifier, value.value)} | {many} argument comma identifier eq_val? {-> New argument.many(argument.argument, identifier.identifier, eq_val.value)};
+	single_argument {-> argument} = {single_assign} identifier assign value {-> New argument.single_assign(identifier.identifier, value.value)} |
+									{single} identifier {-> New argument.single(identifier.identifier)};
+
+    argument {->argument}= {single} single_argument {-> single_argument.argument} | 
+	 {many} argument comma single_argument {-> New argument.many(argument.argument, single_argument.argument)};
 
     import_package = {simple_import} import module as_id? comma_module* {-> New import_package.simple_import(module, as_id.identifier, [comma_module])} |
                      {specific_import} from module [mod_alias]:as_id? import identifier [pack_alias]:as_id? comma_id_as_id* {-> New import_package.specific_import(module, [mod_alias.identifier], identifier.identifier, [pack_alias.identifier], [comma_id_as_id])};
@@ -169,8 +173,6 @@ Productions
     			{string} string {-> New value.string(string)}|
     			{none} none {-> New value.none()};
 
-	eq_val {->value} = assign value {-> value.value};
-
     real_number {-> value} = {positive} number {-> New value.pos_num(number)}|
                   {neg} minus number {-> New value.neg_num(number)};
 	
@@ -188,9 +190,9 @@ Abstract Syntax Tree
 
 	function = identifier argument statement;
 
-	argument = {single} identifier |
-				{single_assign} identifier value |
-				{many} argument identifier value;
+	argument = {single_assign} identifier value |
+				{single} identifier |
+				{many} [a1]:argument [a2]:argument;
 
 	id_assign = identifier value*;
 

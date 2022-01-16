@@ -123,26 +123,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAFunction(node);
     }
 
-    public void inASingleArgument(ASingleArgument node)
-    {
-        defaultIn(node);
-    }
-
-    public void outASingleArgument(ASingleArgument node)
-    {
-        defaultOut(node);
-    }
-
-    public void caseASingleArgument(ASingleArgument node)
-    {
-        inASingleArgument(node);
-        if(node.getIdentifier() != null)
-        {
-            node.getIdentifier().apply(this);
-        }
-        outASingleArgument(node);
-    }
-
     public void inASingleAssignArgument(ASingleAssignArgument node)
     {
         defaultIn(node);
@@ -167,6 +147,26 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outASingleAssignArgument(node);
     }
 
+    public void inASingleArgument(ASingleArgument node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASingleArgument(ASingleArgument node)
+    {
+        defaultOut(node);
+    }
+
+    public void caseASingleArgument(ASingleArgument node)
+    {
+        inASingleArgument(node);
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        outASingleArgument(node);
+    }
+
     public void inAManyArgument(AManyArgument node)
     {
         defaultIn(node);
@@ -180,17 +180,13 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAManyArgument(AManyArgument node)
     {
         inAManyArgument(node);
-        if(node.getValue() != null)
+        if(node.getA2() != null)
         {
-            node.getValue().apply(this);
+            node.getA2().apply(this);
         }
-        if(node.getIdentifier() != null)
+        if(node.getA1() != null)
         {
-            node.getIdentifier().apply(this);
-        }
-        if(node.getArgument() != null)
-        {
-            node.getArgument().apply(this);
+            node.getA1().apply(this);
         }
         outAManyArgument(node);
     }

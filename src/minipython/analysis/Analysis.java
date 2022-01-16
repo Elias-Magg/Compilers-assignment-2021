@@ -16,8 +16,8 @@ public interface Analysis extends Switch
     void caseAFunctionCommand(AFunctionCommand node);
     void caseAStatementCommand(AStatementCommand node);
     void caseAFunction(AFunction node);
-    void caseASingleArgument(ASingleArgument node);
     void caseASingleAssignArgument(ASingleAssignArgument node);
+    void caseASingleArgument(ASingleArgument node);
     void caseAManyArgument(AManyArgument node);
     void caseAIdAssign(AIdAssign node);
     void caseAIfStatement(AIfStatement node);

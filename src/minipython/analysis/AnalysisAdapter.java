@@ -88,12 +88,12 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
-    public void caseASingleArgument(ASingleArgument node)
+    public void caseASingleAssignArgument(ASingleAssignArgument node)
     {
         defaultCase(node);
     }
 
-    public void caseASingleAssignArgument(ASingleAssignArgument node)
+    public void caseASingleArgument(ASingleArgument node)
     {
         defaultCase(node);
     }
