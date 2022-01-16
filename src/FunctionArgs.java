@@ -2,6 +2,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+/* Helper class used to store function arguments.
+ */
 public class FunctionArgs {
 
     Hashtable<String, Type> args;
